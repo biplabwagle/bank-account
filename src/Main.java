@@ -8,20 +8,36 @@ public class Main {
         boolean startProgram = true;
         Scanner scanner = new Scanner(System.in);
         while(startProgram){
-            System.out.print("Enter accountHolders name: ");
-            scanner.nextLine();
-            System.out.println("Enter account Number");
-            scanner.nextLine();
-            System.out.println("Enter account balance");
+            startProgram = runner(scanner);
         }
-        BankAccount abc = new BankAccount("456", 0, "Biplab");
-        System.out.println("Done with account 1 creation");
-        BankAccount xyz = new BankAccount("889", 300, "Sabina");
-        System.out.println("Done with account 2 creation");
-        abc.deposit(300);
-        xyz.calculateInterest(10);
-        xyz.deposit(300);
-        System.out.println(BankAccount.getTotalAccountsNumbers());
-        BankAccount.displayAllAccounts();
     }
+
+    public static boolean runner(Scanner scanner){
+        System.out.print("Enter accountHolders name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter account Number: ");
+        String accountNumber = scanner.nextLine();
+        System.out.print("Enter account balance: ");
+        double amount = scanner.nextDouble();
+        //Storing the carriage return after getting nextDouble in the line above
+        scanner.nextLine();
+        System.out.println("Creating account...");
+        new BankAccount(accountNumber, amount, name);
+        BankAccount.displayAllAccounts();
+        System.out.println("Done.........");
+
+        System.out.print("Would you like to add more account yes or no: ");
+        String userInput = scanner.nextLine();
+
+        boolean startProgram = userInput.equalsIgnoreCase("yes") ? true : false;
+
+        if(startProgram){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
 }
