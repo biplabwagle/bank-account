@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class BankAccount {
+public class BankAccount implements BankAccountInterface {
     private String accountNumber;
     private double balance;
     private String accountHolderName;
@@ -14,7 +14,7 @@ public class BankAccount {
     private static Set<String> accountNumbers = new HashSet<>();
     private static Set<BankAccount> accounts = new HashSet<>();
     public BankAccount(String accountNumber, double balance, String accountHolderName) {
-        if(accountNumber.contains(accountNumber)){
+        if(accountNumbers.contains(accountNumber)){
             System.out.println("This account number already exists");
         }
         this.accountNumber = accountNumber;
@@ -24,7 +24,7 @@ public class BankAccount {
         this.accountNumbers.add(accountNumber);
         accounts.add(this);
     }
-
+    @Override
     public double deposit(double amount) {
         if (amount > 0) {
             balance += amount;
@@ -34,10 +34,11 @@ public class BankAccount {
         return balance;
     }
 
+    @Override
     public double getBalance(){
         return this.balance;
     }
-
+    @Override
     public double withdrawal(double amount){
         if(amount <= balance){
             balance -= amount;
@@ -48,12 +49,13 @@ public class BankAccount {
         return balance;
     }
 
+    @Override
     public boolean transferAmount(BankAccount targetAccount, double amount){
 
         return true;
     }
 
-
+    @Override
     public double calculateInterest(double annualRate){
         long accountAgeInDays = ChronoUnit.DAYS.between(accountCreationDate, LocalDate.now());
         double interest = balance * (annualRate * 100) * (accountAgeInDays / 365.25);
@@ -71,10 +73,10 @@ public class BankAccount {
             System.out.println("-----------------------------");
             System.out.println("Printing information for " + account.accountHolderName);
             System.out.println("-----------------------------");
-            System.out.println(account.accountCreationDate);
-            System.out.println(account.accountNumber);
-            System.out.println(account.balance);
-            System.out.println("End of execution for " + account.accountHolderName);
+            System.out.println("Account Created on: " +account.accountCreationDate);
+            System.out.println("Account Number: " +account.accountNumber);
+            System.out.println("Account Balance: " +account.balance);
+            System.out.println("End of execution for " +account.accountHolderName + " bank account");
 
         }
     }
